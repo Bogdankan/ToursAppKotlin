@@ -16,9 +16,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        flatDir { dirs(file("unityLibrary/libs")) }
     }
 }
 
 rootProject.name = "Tours App"
 include(":app")
+
+//Unity
+include(":unityLibrary")
+project(":unityLibrary").projectDir = file("unityLibrary")
  

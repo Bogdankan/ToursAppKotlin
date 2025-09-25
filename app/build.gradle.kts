@@ -10,6 +10,7 @@ plugins {
 android {
     namespace = "com.bogdankan.toursapp"
     compileSdk = 36
+    ndkVersion = "23.1.7779620"
 
     defaultConfig {
         applicationId = "com.bogdankan.toursapp"
@@ -18,6 +19,9 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
     }
 
     buildFeatures { compose = true }
@@ -33,10 +37,10 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions { jvmTarget = "1.8" }
+    kotlinOptions { jvmTarget = "11" }
 }
 
 dependencies {
@@ -78,6 +82,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Unity
+    implementation(project(":unityLibrary"))
+    //implementation(files("libs/unity-classes.jar"))
 }
 
 

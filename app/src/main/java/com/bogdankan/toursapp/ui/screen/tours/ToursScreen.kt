@@ -18,24 +18,33 @@ fun ToursScreen(
     vm: ToursViewModel = hiltViewModel()
 ) {
     val state by vm.state.collectAsState()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     Scaffold(
-        topBar = { CenterAlignedTopAppBar(title = { Text("Екскурсії") }) }
+        topBar = { CenterAlignedTopAppBar(title = { Text("Екскурсії") }) },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    context.startActivity(
+                        android.content.Intent(
+                            context,
+                            com.bogdankan.toursapp.unity.UnityActivity::class.java
+                        )
+                    )
+                }
+            ) {
+                // без зайвих залежностей на іконки
+                Text("Unity")
+            }
+        }
     ) { innerPadding ->
-
         when (val s = state) {
             is ToursState.Loading -> Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                CircularProgressIndicator(Modifier.padding(24.dp))
-            }
+                modifier = Modifier.padding(innerPadding).fillMaxSize()
+            ) { CircularProgressIndicator(Modifier.padding(24.dp)) }
 
             is ToursState.Error -> Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
+                modifier = Modifier.padding(innerPadding).fillMaxSize()
             ) {
                 Column(Modifier.padding(24.dp)) {
                     Text("Помилка: ${s.message}")
